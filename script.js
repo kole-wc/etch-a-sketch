@@ -7,6 +7,12 @@ board.style.gridTemplateRows = "repeat(16, 1fr)";
 
 // Global variable(s)
 let isDown = false; // for control() and draw()
+document.body.addEventListener('mousedown', () => {
+    isDown = true;
+});
+document.body.addEventListener('mouseup', () => {
+    isDown = false;
+});
 
 // Generate 16 x 16 grid of square divs
 function createSquares () {
@@ -15,26 +21,18 @@ function createSquares () {
         square.classList.add('square');
         board.appendChild(square);
         square.addEventListener('mouseover', draw);
-    }
-}
-
-// Listen whether the mouse is up or down to determine the state of isDown for draw()
-function control () {
-    board.addEventListener('mousedown', () => {
-        isDown = true;
-    });
-    
-    board.addEventListener('mouseup', () => {
-        isDown = false;
-    });
-}
-
-// Get call when mouse moves over each square to change the color and give the drawing effect
-function draw(e) {
-    if (isDown) {
-        e.target.style.backgroundColor = "grey";
+        square.addEventListener('mousedown', draw);
     }
 }
 
 createSquares(); // Call to populate squares
-control(); // Call to listen to mousedown event for drawing control
+
+// Get call when mouse moves over each square to change the color and give the drawing effect
+function draw(e) {
+    if (e.type === 'mouseover' && !isDown) {
+        return;
+    }
+    else {
+        e.target.style.backgroundColor = "grey";
+    }
+}
