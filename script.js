@@ -1,9 +1,16 @@
 // Global selected node(s)
 const board = document.querySelector('.board');
 const selectSize = document.querySelector('.select-size');
+const menu =document.querySelector('.menu');
+const randomColor = document.querySelector('.random-color');
+const blackColor = document.createElement('button');
+
+// Node(s) content
+blackColor.textContent = "Black";
 
 // Global variable(s)
 let isDown = false; // for draw()
+let color = "black"; // default color
 
 // Detect mouse down and up for draw()
 document.body.addEventListener('mousedown', () => {
@@ -11,6 +18,18 @@ document.body.addEventListener('mousedown', () => {
 });
 document.body.addEventListener('mouseup', () => {
     isDown = false;
+});
+
+// Switch color when clicked
+randomColor.addEventListener('click', () => {
+    color = 'random';
+    randomColor.remove();
+    menu.appendChild(blackColor);
+});
+blackColor.addEventListener('click', () => {
+    color = 'black';
+    blackColor.remove();
+    menu.appendChild(randomColor);
 });
 
 // Generate 16 x 16 grid of square divs
@@ -35,7 +54,7 @@ function draw(e) {
         return;
     }
     else {
-        e.target.style.backgroundColor = changeColor();
+        e.target.style.backgroundColor = changeColor(color);
     }
 }
 
@@ -62,11 +81,16 @@ function removeSquares(board) {
     }
 }
 
-// Function for ramdom colors or shading
-function changeColor() {
-    const r = Math.floor(Math.random() * 256);
-    const g = Math.floor(Math.random() * 256);
-    const b = Math.floor(Math.random() * 256);
-    const randomRgb = `rgb(${r}, ${g}, ${b})`
-    return randomRgb
+// Function for ramdom color
+function changeColor(color) {
+    if (color === 'random') {
+        const r = Math.floor(Math.random() * 256);
+        const g = Math.floor(Math.random() * 256);
+        const b = Math.floor(Math.random() * 256);
+        const randomRgb = `rgb(${r}, ${g}, ${b})`;
+        return randomRgb;
+    }
+    else {
+        return color;
+    }
 }
