@@ -1,9 +1,6 @@
 // Global selected node(s)
 const board = document.querySelector('.board');
-
-// Node(s) styling
-board.style.gridTemplateColumns = "repeat(16, 1fr)";
-board.style.gridTemplateRows = "repeat(16, 1fr)";
+const selectSize = document.querySelector('.select-size');
 
 // Global variable(s)
 let isDown = false; // for control() and draw()
@@ -15,8 +12,12 @@ document.body.addEventListener('mouseup', () => {
 });
 
 // Generate 16 x 16 grid of square divs
-function createSquares () {
-    for (let i = 0; i < 256; i++) {
+
+function createSquares (size) {
+    board.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
+    board.style.gridTemplateRows = `repeat(${size}, 1fr)`;
+
+    for (let i = 0; i < (size * size); i++) {
         const square = document.createElement('div');
         square.classList.add('square');
         board.appendChild(square);
@@ -25,7 +26,7 @@ function createSquares () {
     }
 }
 
-createSquares(); // Call to populate squares
+createSquares(16); // Call to populate squares
 
 // Get call when mouse moves over each square to change the color and give the drawing effect
 function draw(e) {
@@ -34,5 +35,26 @@ function draw(e) {
     }
     else {
         e.target.style.backgroundColor = "grey";
+    }
+}
+
+selectSize.addEventListener('click', changeSize);
+function changeSize() {
+    removeSquares(board);
+    size = prompt('Enter the new size from 1-100', '16');
+    if (size === null) {
+        createSquares(16);
+    }
+    else if (size > 100) {
+        changeSize();
+    }
+    else {
+        createSquares(size);
+    }
+}
+
+function removeSquares(board) {
+    while (board.firstChild) {
+        board.removeChild(board.firstChild);
     }
 }

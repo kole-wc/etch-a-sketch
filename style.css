@@ -1,16 +1,26 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
 
 body {
+    margin: 0;
+    padding: 0;
+    background: rgb(233, 233, 233);
+}
+
+.container {
     
 }
 
 .board {
+    background: rgb(255, 255, 255);
     width: 500px;
     height: 500px;
     display: grid;
+    border: 5px solid black;
+    user-select: none;
+    padding: 5px;
 }
 
 .square {
-    background: black;
+    border-radius: 2.5px;
     border: 1px solid white;
 }
