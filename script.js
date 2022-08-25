@@ -12,7 +12,6 @@ document.body.addEventListener('mouseup', () => {
 });
 
 // Generate 16 x 16 grid of square divs
-
 function createSquares (size) {
     board.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
     board.style.gridTemplateRows = `repeat(${size}, 1fr)`;
@@ -34,10 +33,11 @@ function draw(e) {
         return;
     }
     else {
-        e.target.style.backgroundColor = "grey";
+        e.target.style.backgroundColor = "black";
     }
 }
 
+// Change the size of the grid after new input to provide new draw board
 selectSize.addEventListener('click', changeSize);
 function changeSize() {
     removeSquares(board);
@@ -53,6 +53,7 @@ function changeSize() {
     }
 }
 
+// Remove all squares before creating the new board
 function removeSquares(board) {
     while (board.firstChild) {
         board.removeChild(board.firstChild);
