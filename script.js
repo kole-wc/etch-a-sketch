@@ -3,7 +3,9 @@ const board = document.querySelector('.board');
 const selectSize = document.querySelector('.select-size');
 
 // Global variable(s)
-let isDown = false; // for control() and draw()
+let isDown = false; // for draw()
+
+// Detect mouse down and up for draw()
 document.body.addEventListener('mousedown', () => {
     isDown = true;
 });
@@ -33,7 +35,7 @@ function draw(e) {
         return;
     }
     else {
-        e.target.style.backgroundColor = "black";
+        e.target.style.backgroundColor = changeColor();
     }
 }
 
@@ -58,4 +60,13 @@ function removeSquares(board) {
     while (board.firstChild) {
         board.removeChild(board.firstChild);
     }
+}
+
+// Function for ramdom colors or shading
+function changeColor() {
+    const r = Math.floor(Math.random() * 256);
+    const g = Math.floor(Math.random() * 256);
+    const b = Math.floor(Math.random() * 256);
+    const randomRgb = `rgb(${r}, ${g}, ${b})`
+    return randomRgb
 }
